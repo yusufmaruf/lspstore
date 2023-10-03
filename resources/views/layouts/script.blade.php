@@ -1,6 +1,7 @@
 <!-- Javascript -->
 <script src="{{ asset('dist/assets/vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('js/sweetalert2.min.js') }}"></script>
+{{-- <script src="{{ asset('dist/assets/vendor/sweetalert/sweetalert.min.js') }}"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.31/dist/sweetalert2.all.min.js"></script>
 <script src="{{ asset('dist/assets/bundles/libscripts.bundle.js') }}"></script>
 <script src="{{ asset('dist/assets/bundles/vendorscripts.bundle.js') }}"></script>
 <script src="{{ asset('dist/assets/bundles/jvectormap.bundle.js') }}"></script> <!-- JVectorMap Plugin Js -->
@@ -20,15 +21,16 @@
             timer: 3000,
             timerProgressBar: true,
             didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
-        });
+        })
+        var successMessage = @json(session('success_message'));
 
         Toast.fire({
             icon: 'success',
-            title: '{{ Session::get('success_message') }}'
-        });
+            title: successMessage
+        })
     </script>
 @endif
 
