@@ -15,14 +15,14 @@ class CategoriesController extends Controller
     {
         $categories = Category::all();
         $products = Product::where('stok', '>', 0)->paginate(32);
-        return view('pages.category', ['categories' => $categories, 'products' => $products]);
+        return view('pages.user.pages.categories.index', ['categories' => $categories, 'products' => $products]);
     }
     public function detail(Request $request, $slug)
     {
         $categories = Category::all();
         $category = Category::where('slug', $slug)->firstOrFail();
         $products = Product::where('idCategory', $category->idCategory)->paginate(32);
-        return view('pages.category', ['categories' => $categories, 'products' => $products]);
+        return view('pages.user.pages.categories.index', ['categories' => $categories, 'products' => $products]);
     }
 
     /**

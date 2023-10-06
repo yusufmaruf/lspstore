@@ -12,19 +12,19 @@
             <div class="product-slider-active-1 swiper-container">
                 <div class="swiper-wrapper">
                     @foreach ($categories as $item)
-                        <div class="swiper-slide">
-                            <div class="product-wrap" data-aos="fade-up" data-aos-delay="200">
-                                <div class="product-img img-zoom mb-25">
-                                    <a href="product-details.html">
+                        <a href="{{ route('categories-detail', ['id' => $item->slug]) }}">
+                            <div class="swiper-slide">
+                                <div class="product-wrap" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="product-img img-zoom mb-25">
                                         <img src="{{ asset('storage/' . $item->image) }}"
                                             style="width: 270px; height: 300px" alt="">
-                                    </a>
-                                </div>
-                                <div class="product-content">
-                                    <h3><a href="product-details.html">{{ $item->name }}</a></h3>
+                                    </div>
+                                    <div class="product-content">
+                                        <h3><a href="product-details.html">{{ $item->name }}</a></h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
                 <div class="product-prev-1 product-nav-1" data-aos="fade-up" data-aos-delay="200"><i
@@ -92,8 +92,8 @@
                     <h2>Hot Products</h2>
                 </div>
                 <div class="tab-style-1 nav" data-aos="fade-up" data-aos-delay="400">
-                    <a class="active" href="#pro-1" data-bs-toggle="tab">New Arrivals </a>
-                    <a href="#pro-3" data-bs-toggle="tab" class=""> Sale Items </a>
+                    <a href="#" data-bs-toggle="tab">More </a>
+
                 </div>
             </div>
             <div class="tab-content jump">

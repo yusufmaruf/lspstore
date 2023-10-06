@@ -11,9 +11,9 @@
                     <div class="main-menu text-center">
                         <nav>
                             <ul>
-                                <li><a href="index.html">HOME</a></li>
+                                <li><a href="/">HOME</a></li>
                                 <li><a href="shop.html">SHOP</a></li>
-                                <li><a href="#">Category</a></li>
+                                <li><a href="{{ route('categories') }}">Category</a></li>
                             </ul>
                         </nav>
                     </div>
