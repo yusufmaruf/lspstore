@@ -34,6 +34,17 @@
     </script>
 @endif
 
+@if (Session::has('success'))
+    <script>
+        var success = @json(session('success'));
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: success,
+        })
+    </script>
+@endif
+
 @if ($errors->any())
     @foreach ($errors->all() as $error)
         <script>

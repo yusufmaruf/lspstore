@@ -19,10 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-
+            $table->integer('gender')->nullable();
             $table->string('roles')->default('USER');
             $table->longText('address_one')->nullable();
-            $table->longText('address_two')->nullable();
             $table->integer('provinces_id')->nullable();
             $table->integer('regencies_id')->nullable();
             $table->integer('zip_code')->nullable();

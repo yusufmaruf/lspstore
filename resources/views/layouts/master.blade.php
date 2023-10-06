@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- VENDOR CSS -->
     @include('layouts.style')
     <style>
@@ -21,7 +22,7 @@
     @stack('style')
 </head>
 
-<body data-theme="dark" class="font-nunito">
+<body data-theme="light" class="font-nunito">
     <div id="wrapper" class="theme-orange">
         <!-- Page Loader -->
         <!-- Top navbar div start -->
