@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ProductController extends Controller
 {
@@ -90,9 +91,13 @@ class ProductController extends Controller
     public function edit(String $id)
     {
         // $product = Product::where('idProduct', $id)->first();
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
-        return view('pages.admin.product.edit', compact('product', 'categories'));
+        try {
+            $product = Product::findOrFail($id);
+            $categories = Category::all();
+            return view('pages.admin.product.edit', compact('product', 'categories'));
+        } catch (\Throwable $th) {
+            return redirect()->back();
+        }
     }
 
 

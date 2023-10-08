@@ -4,43 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CategoriesController extends Controller
+class DetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, $id)
     {
-        $categories = Category::all();
-        $products = Product::where('stok', '>', 0)->paginate(32);
+
+        $product = Product::where('slug', $id)->firstOrFail();
         $subtotal = 0;
         if (Auth::user()) {
             $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
             foreach ($cart as $c) {
                 $subtotal = $subtotal + $c->product->price * $c->quantity;
             }
-            return view('pages.user.pages.categories.index', compact('products', 'categories', 'cart', 'subtotal'));
+            return view('pages.user.pages.product.index', compact('product', 'cart', 'subtotal'));
         }
-        return view('pages.user.pages.categories.index', ['categories' => $categories, 'products' => $products]);
-    }
-    public function detail(Request $request, $slug)
-    {
-        $categories = Category::all();
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::where('idCategory', $category->idCategory)->paginate(32);
-        $subtotal = 0;
-        if (Auth::user()) {
-            $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
-            foreach ($cart as $c) {
-                $subtotal = $subtotal + $c->product->price * $c->quantity;
-            }
-            return view('pages.user.pages.categories.index', compact('products', 'categories', 'cart', 'subtotal'));
-        }
-        return view('pages.user.pages.categories.index', ['categories' => $categories, 'products' => $products]);
+        return view('pages.user.pages.product.index', ['product' => $product]);
     }
 
     /**

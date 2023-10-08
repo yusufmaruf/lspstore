@@ -68,8 +68,9 @@
                           <li class=" {{ request()->is('admin/user*') ? 'active' : '' }}">
                               <a href="{{ route('user.index') }}"><i class="fa fa-user"></i><span>User</span></a>
                           </li>
-                          <li>
-                              <a href="#Tables"><i class="fa fa-money"></i><span>Transaksi</span></a>
+                          <li class=" {{ request()->is('admin/transaksi*') ? 'active' : '' }}">
+                              <a href="{{ route('transaksi.index') }}"><i
+                                      class="fa fa-money"></i><span>Transaksi</span></a>
                           </li>
 
                       </ul>

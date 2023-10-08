@@ -3,30 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Product;
-use App\Models\Category;
+use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\TransactionDetail;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class HomesController extends Controller
+class MyAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $productsFirst = Product::where('stok', '>', 0)->orderBy('created_at', 'desc')->take(10)->get();
-        $categories = Category::all();
+        $transaction = Transaction::where('idUser', Auth::user()->id)->get();
+        $account = auth()->user();
         $subtotal = 0;
         if (Auth::user()) {
             $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
             foreach ($cart as $c) {
                 $subtotal = $subtotal + $c->product->price * $c->quantity;
             }
-
-            return view('pages.user.pages.home.index', compact('productsFirst',  'categories', 'cart', 'subtotal'));
+            return view('pages.user.pages.account.index', compact('transaction', 'account', 'cart', 'subtotal'));
         }
-        return view('pages.user.pages.home.index', compact('productsFirst', 'categories'));
     }
 
     /**
@@ -64,9 +64,12 @@ class HomesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $id)
     {
-        //
+        $data = $request->all();
+        $item = User::findOrFail($id);
+        $item->update($data);
+        return redirect()->back();
     }
 
     /**

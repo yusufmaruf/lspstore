@@ -2,6 +2,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Urdan - Minimal eCommerce HTML Template</title>
     <!-- Add site Favicon -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <link rel="icon" href="{{ asset('assets/images/favicon/cropped-favicon-32x32.png') }}" sizes="32x32" />
     <link rel="icon" href="{{ asset('assets/images/favicon/cropped-favicon-192x192.png') }}" sizes="192x192" />
     <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/cropped-favicon-180x180.png') }}" />

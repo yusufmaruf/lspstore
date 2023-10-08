@@ -996,7 +996,8 @@ textarea {
   display: block;
   position: relative;
   line-height: 1;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
+ 
 }
 
 .main-menu > nav > ul > li > ul li:last-child {
@@ -1022,7 +1023,7 @@ textarea {
 
 .main-menu > nav > ul > li > ul.mega-menu-style {
   width: 750px;
-  padding: 28px 30px 0px;
+  padding: 28px 20px 0px;
   text-align: left;
 }
 

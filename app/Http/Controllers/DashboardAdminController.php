@@ -2,31 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Models\Product;
-use App\Models\Category;
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class HomesController extends Controller
+class DashboardAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $productsFirst = Product::where('stok', '>', 0)->orderBy('created_at', 'desc')->take(10)->get();
-        $categories = Category::all();
-        $subtotal = 0;
-        if (Auth::user()) {
-            $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
-            foreach ($cart as $c) {
-                $subtotal = $subtotal + $c->product->price * $c->quantity;
-            }
-
-            return view('pages.user.pages.home.index', compact('productsFirst',  'categories', 'cart', 'subtotal'));
-        }
-        return view('pages.user.pages.home.index', compact('productsFirst', 'categories'));
+        $user = User::where('roles', 'USER')->get()->count();
+        $transaction = Transaction::all()->count();
+        $sales = TransactionDetail::all()->sum('quantity');
+        $revenue = Transaction::all()->sum('total_price');
+        return view('pages.admin.dashboard.index', compact('user', 'transaction', 'sales', 'revenue'));
     }
 
     /**

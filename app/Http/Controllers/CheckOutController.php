@@ -3,44 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Product;
-use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\Auth;
 
-class CategoriesController extends Controller
+class CheckOutController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::all();
-        $products = Product::where('stok', '>', 0)->paginate(32);
+        $user = Auth::user();
         $subtotal = 0;
         if (Auth::user()) {
             $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
             foreach ($cart as $c) {
                 $subtotal = $subtotal + $c->product->price * $c->quantity;
             }
-            return view('pages.user.pages.categories.index', compact('products', 'categories', 'cart', 'subtotal'));
+            $tax = $subtotal * 0.1;
+            $total = $subtotal + $tax;
+            return view('pages.user.pages.checkout.index', compact('user', 'total', 'tax',  'cart', 'subtotal'));
         }
-        return view('pages.user.pages.categories.index', ['categories' => $categories, 'products' => $products]);
-    }
-    public function detail(Request $request, $slug)
-    {
-        $categories = Category::all();
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::where('idCategory', $category->idCategory)->paginate(32);
-        $subtotal = 0;
-        if (Auth::user()) {
-            $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
-            foreach ($cart as $c) {
-                $subtotal = $subtotal + $c->product->price * $c->quantity;
-            }
-            return view('pages.user.pages.categories.index', compact('products', 'categories', 'cart', 'subtotal'));
-        }
-        return view('pages.user.pages.categories.index', ['categories' => $categories, 'products' => $products]);
+        return view('');
     }
 
     /**
@@ -56,7 +42,27 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $total_price = $request->total_price;
+        $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
+
+        $transaction = Transaction::create([
+            'idUser' => Auth::user()->id,
+            'total_price' => $total_price,
+            'transaction_status' => 'PENDING',
+            'pay' => $request->pay
+        ]);
+        $idtransaction = Transaction::latest('id')->first();
+        foreach ($cart as $c) {
+            $transaction_detail = TransactionDetail::create([
+                'transactions_id' => $idtransaction->id,
+                'idProduct' => $c->product->idProduct,
+                'quantity' => $c->quantity,
+                'price' => $c->product->price * $c->quantity,
+            ]);
+        }
+        Cart::where('idUser', Auth::user()->id)->delete();
+        return redirect()->route('homes.index');
     }
 
     /**

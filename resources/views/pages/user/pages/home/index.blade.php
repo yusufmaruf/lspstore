@@ -19,7 +19,7 @@
                                         <img src="{{ asset('storage/' . $item->image) }}"
                                             style="width: 270px; height: 300px" alt="">
                                     </div>
-                                    <div class="product-content">
+                                    <div class="product-content text-center">
                                         <h3><a href="product-details.html">{{ $item->name }}</a></h3>
                                     </div>
                                 </div>
@@ -103,27 +103,33 @@
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                                 <div class="product-wrap mb-35" data-aos="fade-up" data-aos-delay="200">
                                     <div class="product-img img-zoom mb-25">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('detail', ['id' => $item->slug]) }}">
                                             <img src="{{ asset('storage/' . $item->image) }}"
                                                 style="width: 270px; height: 300px" alt="">
                                         </a>
 
                                         <div class="product-action-wrap">
-                                            <button class="product-action-btn-1" title="Quick View" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
+                                            <a href="{{ route('detail', ['id' => $item->slug]) }}"
+                                                class="product-action-btn-1" title="Quick View">
                                                 <i class="pe-7s-look"></i>
-                                            </button>
+                                            </a>
                                         </div>
                                         <div class="product-action-2-wrap">
-                                            <button class="product-action-btn-2" title="Add To Cart"><i
-                                                    class="pe-7s-cart"></i>
-                                                Add to cart</button>
+                                            <form action="{{ route('add-cart', ['id' => $item->idProduct]) }}"
+                                                enctype="multipart/form-data" method="post">
+                                                @csrf
+                                                <input type="hidden" name="quantity" value="1">
+                                                <button class="product-action-btn-2" title="Add To Cart"><i
+                                                        class="pe-7s-cart"></i>
+                                                    Add to cart</button>
+                                            </form>
                                         </div>
                                     </div>
-                                    <div class="product-content">
-                                        <h3><a href="product-details.html">{{ $item->name }}</a></h3>
+                                    <div class="product-content text-center">
+                                        <h3><a href="{{ route('detail', ['id' => $item->slug]) }}">{{ $item->name }}</a>
+                                        </h3>
                                         <div class="product-price">
-                                            <span class="new-price">{{ $item->price }} </span>
+                                            <span class="new-price">{{ number_format($item->price) }} </span>
                                         </div>
                                     </div>
                                 </div>

@@ -13,8 +13,6 @@ class TransactionDetail extends Model
         'idProduct',
         'quantity',
         'price',
-        'resi',
-        'transactionStatus'
     ];
     public function product()
     {
