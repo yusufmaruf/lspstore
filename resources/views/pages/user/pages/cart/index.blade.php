@@ -60,7 +60,7 @@
                                             <td></td>
                                             <td></td>
                                             <td>
-                                                {{ $subtotal }}
+                                                {{ number_format($subtotal) }}
                                             </td>
                                         </tr>
                                     @endif

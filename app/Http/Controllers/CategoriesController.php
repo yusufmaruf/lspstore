@@ -15,16 +15,24 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        //mengambil seluruh kategori
         $categories = Category::all();
+        //mengambil data product yang ada stoknya dan hanya dibatasi 32
         $products = Product::where('stok', '>', 0)->paginate(32);
+        // insialisasi sub total untuk cart 
         $subtotal = 0;
+        //pengisian cart
         if (Auth::user()) {
+            //megambil cart dengan id user yang sudah login
             $cart = Cart::where('idUser', Auth::user()->id)->with('product')->get();
+            //menghitung jumlah cart
             foreach ($cart as $c) {
                 $subtotal = $subtotal + $c->product->price * $c->quantity;
             }
+            // akan redirect ke halaman kategori 
             return view('pages.user.pages.categories.index', compact('products', 'categories', 'cart', 'subtotal'));
         }
+        //jika tidak login maka tidak akan menampilkan jumlah cart
         return view('pages.user.pages.categories.index', ['categories' => $categories, 'products' => $products]);
     }
     public function detail(Request $request, $slug)

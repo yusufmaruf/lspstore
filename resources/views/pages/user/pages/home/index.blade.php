@@ -92,7 +92,7 @@
                     <h2>Hot Products</h2>
                 </div>
                 <div class="tab-style-1 nav" data-aos="fade-up" data-aos-delay="400">
-                    <a href="#" data-bs-toggle="tab">More </a>
+                    <a href="{{ route('categories') }}">More </a>
 
                 </div>
             </div>
