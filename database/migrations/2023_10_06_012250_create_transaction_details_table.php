@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('price');
             $table->string('transactionStatus')->default('menunggu konfirmasi penjual');
-            $table->string('resi');
+
             $table->timestamps();
         });
     }
