@@ -52,7 +52,7 @@
 
                         <div class="header-action-style header-action-cart">
                             @guest
-                                <a href="{{ route('login') }}"><i
+                                <a href="{{ route('register') }}"><i
                                         class="btn btn-success btn-sm d-none d-lg-block d-xl-block"
                                         style="font-size: 14px">Register</i></a>
                             @endguest
